@@ -4,6 +4,7 @@ let game = new Phaser.Game(600, 400, Phaser.AUTO);
 
 // Adding a state to our game.
 // add(nameOfState, nameOfProperty in Demo Object)
+game.state.add('state0', demo.state0);
 game.state.add('state1', demo.state1);
 game.state.add('state2', demo.state2);
 game.state.add('state3', demo.state3);
