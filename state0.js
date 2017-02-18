@@ -4,8 +4,7 @@ demo.state0 = function(){};
 demo.state0.prototype = {
 	preload: function(){
 		// Load Sprite / Sprite Sheet
-		//game.load.image('human', 'assets/sprites/human4.png');
-		game.load.spritesheet('human', 'assets/spritesheets/adamSheet.png', 260, 500);
+		game.load.spritesheet('adam', 'assets/spritesheets/adamSheet.png', 260, 500);
 		game.load.image('treeBG', 'assets/backgrounds/road.png');
 	},
 	create: function(){
@@ -28,7 +27,7 @@ demo.state0.prototype = {
 
 
 		// Add Sprite:
-		adam = game.add.sprite(centerX, centerY, 'human');
+		adam = game.add.sprite(centerX, centerY, 'adam');
 		adam.anchor.setTo(0.5, 0.5);
 		// Scale Adam's width / height with SetTo
 		adam.scale.setTo(0.7, 0.7);
@@ -76,6 +75,7 @@ demo.state0.prototype = {
 
 // Phaser Functions 1st argument is the Event Object
 function changeState(i, stateNum) {
+	console.log('state' + stateNum);
 	game.state.start('state' + stateNum)
 }
 
