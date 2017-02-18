@@ -16,7 +16,7 @@ demo.state1.prototype = {
 		addChangeStateEventListners();
 
 		// Set Game Bounds:
-		game.world.setBounds(0, 0, 1500, 1000);
+		game.world.setBounds(0, 0, 1500, 980);
 
 		// Layers are drawen in the order they we're created:
 		let map = game.add.tilemap('field');
