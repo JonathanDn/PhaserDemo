@@ -14,6 +14,10 @@ demo.state1.prototype = {
 		// Physics initialize continute to other states
 		game.stage.backgroundColor = '#dddddd';
 		addChangeStateEventListners();
+
+		// Set Game Bounds:
+		game.world.setBounds(0, 0, 1500, 1000);
+
 		// Layers are drawen in the order they we're created:
 		let map = game.add.tilemap('field');
 		map.addTilesetImage('grassTile');
@@ -22,13 +26,16 @@ demo.state1.prototype = {
 		let grass = map.createLayer('grass');
 		rocks = map.createLayer('rocks');
 
+		// Collision With Rocks
 		// Indexes of collison objects (indexStart, indexEnd, enableCollision, layer)
 		map.setCollisionBetween(1, 9, true, 'rocks')
 
 		adam = game.add.sprite(200, 200, 'adam');
 		adam.scale.setTo(0.2, 0.2);
 
+		// Define Physics + collide world bounds
 		game.physics.enable(adam);
+		adam.body.collideWorldBounds = true;
 
 		cursors = game.input.keyboard.createCursorKeys();
 	},
