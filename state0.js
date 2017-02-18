@@ -1,5 +1,7 @@
 // Game Obejct - only make once:
 let demo = {};
+let centerX = 1500 / 2;
+let centerY = 1000 / 2;
 demo.state0 = function(){};
 demo.state0.prototype = {
 	preload: function(){
@@ -15,7 +17,7 @@ demo.state0.prototype = {
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
 		// Add Sprite:
-		game.add.sprite(0, 0, 'human')
+		game.add.sprite(centerX, centerY, 'human')
 	},
 	update: function(){}
 };
