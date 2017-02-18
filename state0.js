@@ -3,8 +3,9 @@ let demo = {}, centerX = 1500 / 2, centerY = 1000 / 2, adam, speed = 6;
 demo.state0 = function(){};
 demo.state0.prototype = {
 	preload: function(){
-		// Load Sprite
-		game.load.image('human', 'assets/sprites/human4.png');
+		// Load Sprite / Sprite Sheet
+		//game.load.image('human', 'assets/sprites/human4.png');
+		game.load.spritesheet('human', 'assets/spritesheets/adamSheet.png', 260, 500);
 		game.load.image('treeBG', 'assets/backgrounds/road.png');
 	},
 	create: function(){
@@ -34,6 +35,8 @@ demo.state0.prototype = {
 		// Add Physics to Image - and if hitting game bounds collide.
 		game.physics.enable(adam);
 		adam.body.collideWorldBounds = true;
+		// Add Animation to Adam:
+		adam.animations.add('walk', [0, 1, 2, 3, 4])
 
 		// Camera:
 		game.camera.follow(adam);
@@ -45,15 +48,23 @@ demo.state0.prototype = {
 		if( game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
 			adam.scale.setTo(0.7, 0.7);
 			adam.x += speed;
+			// play(Key, FPS, Loop)
+			adam.animations.play('walk', 14, true);
 		} else if( game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
 			adam.scale.setTo(-0.7, 0.7);
 			adam.x -= speed;
+			adam.animations.play('walk', 14, true);
+		} else {
+			// When not clicking right / left stop walking
+			adam.animations.stop('walk');
+			// Set back to 0 frame:
+			adam.frame = 0;
 		}
 
 		if( game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
 			adam.y -= speed;
 			if (adam.y < 395) {
-				adam.y = 395
+				adam.y = 395;
 			}
 		} else if( game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
 			adam.y += speed;
