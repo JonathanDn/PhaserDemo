@@ -1,6 +1,6 @@
 // Args: (Width, Height, renderer)
 // Phaser.AUTO - picks renderer for you.
-let game = new Phaser.Game(600, 400, Phaser.AUTO);
+let game = new Phaser.Game(1500, 1000, Phaser.AUTO);
 
 // Adding a state to our game.
 // add(nameOfState, nameOfProperty in Demo Object)

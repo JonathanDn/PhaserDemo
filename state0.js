@@ -2,12 +2,20 @@
 let demo = {};
 demo.state0 = function(){};
 demo.state0.prototype = {
-	preload: function(){},
+	preload: function(){
+		// Load Sprite
+		game.load.image('human', 'assets/sprites/human4.png');
+	},
 	create: function(){
 		game.stage.backgroundColor = '#80ff80';
 		console.log("state0");
-
 		addChangeStateEventListners();
+		// Resizes the game According to game window size, carries on to all states.
+		// 4  Other scale modes - FYI
+		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
+		// Add Sprite:
+		game.add.sprite(0, 0, 'human')
 	},
 	update: function(){}
 };

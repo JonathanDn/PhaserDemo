@@ -1,0 +1,4 @@
+/*no margin for game screen and no bottom horizontal scrollbar*/
+* {
+	margin: 0;
+}
