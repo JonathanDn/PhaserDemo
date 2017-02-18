@@ -1,25 +1,64 @@
 // Game Obejct - only make once:
-let demo = {};
-let centerX = 1500 / 2;
-let centerY = 1000 / 2;
+let demo = {}, centerX = 1500 / 2, centerY = 1000 / 2, adam, speed = 6;
 demo.state0 = function(){};
 demo.state0.prototype = {
 	preload: function(){
 		// Load Sprite
 		game.load.image('human', 'assets/sprites/human4.png');
+		game.load.image('treeBG', 'assets/backgrounds/road.png');
 	},
 	create: function(){
+		// Initializing Specified Game Physics:
+		game.physics.startSystem(Phaser.Physics.ARCADE);
+
 		game.stage.backgroundColor = '#80ff80';
 		console.log("state0");
 		addChangeStateEventListners();
+
+		// Set Game Bounds:
+		game.world.setBounds(0, 0, 2013, 1000);
+
 		// Resizes the game According to game window size, carries on to all states.
 		// 4  Other scale modes - FYI
 		game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
+		// Draw Background first
+		let treeBG = game.add.sprite(0, 0, 'treeBG');
+
+
 		// Add Sprite:
-		game.add.sprite(centerX, centerY, 'human')
+		adam = game.add.sprite(centerX, centerY, 'human');
+		adam.anchor.setTo(0.5, 0.5);
+		// Scale Adam's width / height with SetTo
+		adam.scale.setTo(0.7, 0.7);
+		// Add Physics to Image - and if hitting game bounds collide.
+		game.physics.enable(adam);
+		adam.body.collideWorldBounds = true;
+
+		// Camera:
+		game.camera.follow(adam);
+		// DeadZone - (originX, OriginY, width, height)
+		game.camera.deadzone = new Phaser.Rectangle(centerX - 300, 0, 600, 1000);
+
 	},
-	update: function(){}
+	update: function(){
+		if( game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+			adam.scale.setTo(0.7, 0.7);
+			adam.x += speed;
+		} else if( game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+			adam.scale.setTo(-0.7, 0.7);
+			adam.x -= speed;
+		}
+
+		if( game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+			adam.y -= speed;
+			if (adam.y < 395) {
+				adam.y = 395
+			}
+		} else if( game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+			adam.y += speed;
+		}
+	}
 };
 
 // Functions declared like so are Global
