@@ -1,4 +1,5 @@
-let barrel, bullets, velocity = 1000, nextFire = 0, fireRate = 200;
+let barrel, bullets, velocity = 1000, nextFire = 0, fireRate = 200, enemy,
+	bullet, enemyGroup;
 
 demo.state2 = function(){};
 demo.state2.prototype = {
@@ -34,12 +35,38 @@ demo.state2.prototype = {
 		barrel = game.add.sprite(centerX, centerY, 'barrel');
 		barrel.anchor.setTo(0.3, 0.5);
 		barrel.scale.setTo(1, 1);
+
+
+		// Enemies:
+		// One Enemy
+		enemy = game.add.sprite(100, 200, 'adam');
+		game.physics.enable(enemy);
+
+		// group:
+		enemyGroup = game.add.group();
+		enemyGroup.enableBody = true;
+		enemyGroup.physicsBodyType = Phaser.Physics.ARCADE;
+
+		for(let i = 0; i < 3; i++) {
+			// X, Y, sprite
+			enemyGroup.create(1300, 350 * i, 'adam');
+		}
+		// setAll - changes any property of the child of this group to what I want here
+		enemyGroup.setAll('anchor.y', -0.3);
+		enemyGroup.setAll('anchor.x', 0.5);
+		enemyGroup.setAll('scale.x', 0.4);
+		enemyGroup.setAll('scale.y', 0.4);
+
 	},
 	update: function(){
 		barrel.rotation = game.physics.arcade.angleToPointer(barrel);
 		if (game.input.activePointer.isDown) {
 			this.fire();
 		}
+		// Check if bullet overlap with enemy:
+		//console.log('this.hitEnemey', this.hitEnemey)
+		game.physics.arcade.overlap(bullets, enemy, this.hitEnemy);
+		game.physics.arcade.overlap(enemyGroup, bullets, this.hitGroup);
 	},
 
 	fire: function(){
@@ -47,7 +74,7 @@ demo.state2.prototype = {
 		if(game.time.now > nextFire) {
 			nextFire = game.time.now + fireRate;
 			console.log('firing!');
-			let bullet = bullets.getFirstDead();
+			bullet = bullets.getFirstDead();
 			// Set the bullet origin
 			bullet.reset(barrel.x, barrel.y);
 
@@ -57,5 +84,14 @@ demo.state2.prototype = {
 			// Rotate bullet according to angle of pointer.
 			bullet.rotation = game.physics.arcade.angleToPointer(bullet);
 		}
+	},
+	hitEnemy: function() {
+		console.log('hit');
+		enemy.kill();
+		bullet.kill();
+	},
+	hitGroup: function(e) {
+		bullet.kill();
+		e.kill();
 	}
 };
